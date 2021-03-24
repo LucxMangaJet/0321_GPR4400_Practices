@@ -11,13 +11,14 @@ namespace CustomVector
         static void Main(string[] args)
         {
             Console.WriteLine("Running Tests:");
-            TestMagnitude();
             TestAddition();
+            TestMagnitude();
             TestDot();
             TestCross();
             TestScalarProduct();
             TestAngle();
             Console.WriteLine("Tests Finished");
+            Console.ReadLine();
         }
 
         public static void Assert(bool condition, string message)
@@ -27,7 +28,6 @@ namespace CustomVector
                 Console.WriteLine("Test Failed: " + message);
             }
         }
-
 
         public static void TestMagnitude()
         {
@@ -60,10 +60,11 @@ namespace CustomVector
         {
             Vector v1 = new Vector(0, 0, 1);
             Vector v2 = new Vector(0, 1, 0);
+            Vector expected = new Vector(-1, 0, 0);
 
             Vector v3 = Vector.Cross(v1, v2);
 
-            Assert(v3 == new Vector(1, 0, 0), "CrossProduct Failed");
+            Assert(v3 == expected, $"CrossProduct Failed: {v3.ToString()} does not match {expected}");
         }
 
         public static void TestScalarProduct()
@@ -78,8 +79,8 @@ namespace CustomVector
         {
             Vector v1 = new Vector(0, 0, 1);
             Vector v2 = new Vector(0, 1, 0);
-
-            Assert(Vector.AngleBetween(v1, v2) == 90, "AnbleBetween Failed");
+            float angle = Vector.AngleBetween(v1, v2);
+            Assert(angle == 90, $"AngleBetween Failed: {angle} does not match {90}");
         }
 
         public static void TestNormalized()
@@ -87,6 +88,8 @@ namespace CustomVector
             Vector v1 = new Vector(10, 0, 0);
 
             Assert(v1.normalized == new Vector(1, 0, 0), "Normalization Failed");
+
+
         }
     }
 }
