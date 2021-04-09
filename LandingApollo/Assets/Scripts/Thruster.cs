@@ -9,44 +9,42 @@ public class Thruster : MonoBehaviour
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] bool atPoint;
 
-    bool on;
+    float throttle;
+    float particleMaxRate;
 
     private void Start()
     {
-        particleSystem.Stop();
+        var emission = particleSystem.emission;
+        particleMaxRate = emission.rateOverTimeMultiplier;
+        emission.rateOverTimeMultiplier = 0;
     }
 
     private void FixedUpdate()
     {
-        if (on)
+        if (throttle > 0)
         {
             if (atPoint)
             {
-                rigidbody.AddForceAtPosition(transform.forward * force * Time.fixedDeltaTime, transform.position, ForceMode.Impulse);
+                rigidbody.AddForceAtPosition(transform.forward * throttle * force * Time.fixedDeltaTime, transform.position, ForceMode.Impulse);
             }
             else
             {
-                rigidbody.AddForce(transform.forward * force * Time.fixedDeltaTime, ForceMode.Impulse);
+                rigidbody.AddForce(transform.forward * throttle * force * Time.fixedDeltaTime, ForceMode.Impulse);
             }
         }
     }
 
-    public void TurnOn()
+    public void SetThrottle(float percentThrottle)
     {
-        on = true;
-        particleSystem.Play();
-    }
-
-    public void TurnOff()
-    {
-        on = false;
-        particleSystem.Stop();
+        throttle = Mathf.Clamp01(percentThrottle);
+        var emission = particleSystem.emission;
+        emission.rateOverTimeMultiplier = throttle * particleMaxRate;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = on ? Color.green : Color.gray;
-        Vector3 target = transform.position - transform.forward;
+        Gizmos.color = throttle > 0 ? Color.green : Color.gray;
+        Vector3 target = transform.position - transform.forward * throttle;
         Gizmos.DrawLine(transform.position, target);
     }
 }

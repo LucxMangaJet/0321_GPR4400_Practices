@@ -37,7 +37,8 @@ public class LanderController : MonoBehaviour
 
         if (randomInitialRotation)
         {
-            rigidbody.angularVelocity = new Vector3(Random.Range(-1, 1) * maxRandomInitialRotation.x, Random.Range(-1, 1) * maxRandomInitialRotation.y, Random.Range(-1, 1) * maxRandomInitialRotation.z);
+            float yRot = Random.value > 0.5f ? 1 : -1 * Random.Range(0.3f, 1f) * maxRandomInitialRotation.y;
+            rigidbody.angularVelocity = new Vector3(0, yRot, 0);
         }
     }
 
@@ -61,21 +62,21 @@ public class LanderController : MonoBehaviour
         {
             if (Input.GetKey((KeyCode)((int)KeyCode.Alpha0 + i)))
             {
-                sideThrusters[i].TurnOn();
+                sideThrusters[i].SetThrottle(1);
             }
             else
             {
-                sideThrusters[i].TurnOff();
+                sideThrusters[i].SetThrottle(0);
             }
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
-            mainEngine.TurnOn();
+            mainEngine.SetThrottle(1);
         }
         else
         {
-            mainEngine.TurnOff();
+            mainEngine.SetThrottle(0);
         }
     }
 
