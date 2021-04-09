@@ -11,7 +11,7 @@ public class Thruster : MonoBehaviour
 
     float throttle;
     float particleMaxRate;
-
+    bool shutdown;
     private void Start()
     {
         var emission = particleSystem.emission;
@@ -21,7 +21,7 @@ public class Thruster : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (throttle > 0)
+        if (throttle > 0 && !shutdown)
         {
             if (atPoint)
             {
@@ -34,11 +34,27 @@ public class Thruster : MonoBehaviour
         }
     }
 
+    public void Shutdown()
+    {
+        SetThrottle(0);
+        shutdown = true;
+    }
+
     public void SetThrottle(float percentThrottle)
     {
         throttle = Mathf.Clamp01(percentThrottle);
         var emission = particleSystem.emission;
         emission.rateOverTimeMultiplier = throttle * particleMaxRate;
+    }
+
+    public Vector3 GetDirection()
+    {
+        return transform.forward;
+    }
+
+    public float GetMaxImpulseStrength()
+    {
+        return force;
     }
 
     private void OnDrawGizmos()

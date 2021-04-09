@@ -26,6 +26,7 @@ public class LanderController : MonoBehaviour
     [SerializeField] bool manualControl;
 
     float currentHeight = -1;
+    bool landed = false;
 
     private void Start()
     {
@@ -46,7 +47,7 @@ public class LanderController : MonoBehaviour
     {
         UpdateHeight();
 
-        if (manualControl)
+        if (manualControl || landed)
         {
             UpdateManualControl();
         }
@@ -103,6 +104,16 @@ public class LanderController : MonoBehaviour
         {
             Debug.Log("Explosion due to impact strength:" + collision.relativeVelocity.magnitude);
             Explode();
+        }
+        else
+        {
+            Debug.Log("Huston we have landed!");
+
+            mainEngine.Shutdown();
+            foreach (var thruster in sideThrusters)
+            {
+                thruster.Shutdown();
+            }
         }
     }
 
