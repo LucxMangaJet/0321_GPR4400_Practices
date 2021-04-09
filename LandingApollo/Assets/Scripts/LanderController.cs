@@ -15,14 +15,15 @@ public class LanderController : MonoBehaviour
     [SerializeField] Thruster mainEngine;
     [SerializeField] Thruster[] sideThrusters;
 
-    [Header("Settings")]
+    [Header("General Settings")]
     [SerializeField] float unsafeLandingSpeed;
-    [SerializeField] bool randomIntialVelocity;
-    [SerializeField] bool randomInitialRotation;
-
     [SerializeField] Vector3 maxRandomInitialVelocity;
     [SerializeField] Vector3 maxRandomInitialRotation;
     [SerializeField] float maxHeightDetection;
+
+    [Header("Testing Settings")]
+    [SerializeField] bool randomIntialSideVelocity;
+    [SerializeField] bool randomInitialRotation;
     [SerializeField] bool manualControl;
 
     float currentHeight = -1;
@@ -31,10 +32,9 @@ public class LanderController : MonoBehaviour
     private void Start()
     {
         rigidbody.centerOfMass = centerOfMass.position;
-        if (randomIntialVelocity)
-        {
-            rigidbody.velocity = new Vector3(Random.Range(-1, 1) * maxRandomInitialVelocity.x, Random.Range(-0.3f, -1f) * maxRandomInitialVelocity.y, Random.Range(-1f, 1f) * maxRandomInitialVelocity.z);
-        }
+        float x = randomIntialSideVelocity ? Random.Range(-1, 1) * maxRandomInitialVelocity.x : 0;
+        float z = randomIntialSideVelocity ? Random.Range(-1f, 1f) * maxRandomInitialVelocity.z : 0;
+        rigidbody.velocity = new Vector3(x, Random.Range(-0.3f, -1f) * maxRandomInitialVelocity.y, z);
 
         if (randomInitialRotation)
         {

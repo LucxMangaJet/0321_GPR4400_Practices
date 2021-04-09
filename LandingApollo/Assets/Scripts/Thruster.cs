@@ -38,6 +38,7 @@ public class Thruster : MonoBehaviour
     {
         SetThrottle(0);
         shutdown = true;
+        particleSystem.Stop();
     }
 
     public void SetThrottle(float percentThrottle)

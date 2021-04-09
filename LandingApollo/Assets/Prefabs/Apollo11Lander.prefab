@@ -5982,11 +5982,11 @@ MonoBehaviour:
   - {fileID: 1753099940526709198}
   - {fileID: 1753099940593980675}
   unsafeLandingSpeed: 5
-  randomIntialVelocity: 1
-  randomInitialRotation: 1
   maxRandomInitialVelocity: {x: 30, y: 60, z: 30}
   maxRandomInitialRotation: {x: 0, y: 20, z: 0}
   maxHeightDetection: 200
+  randomIntialSideVelocity: 1
+  randomInitialRotation: 1
   manualControl: 0
 --- !u!1 &4642219790240595570
 GameObject:
