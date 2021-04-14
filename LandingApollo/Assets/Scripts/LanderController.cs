@@ -38,7 +38,7 @@ public class LanderController : MonoBehaviour
 
         if (randomInitialRotation)
         {
-            float yRot = Random.value > 0.5f ? 1 : -1 * Random.Range(0.3f, 1f) * maxRandomInitialRotation.y;
+            float yRot = (Random.value > 0.5f ? 1 : -1) * Random.Range(0.3f, 1f) * maxRandomInitialRotation.y;
             rigidbody.angularVelocity = new Vector3(0, yRot, 0);
         }
     }
