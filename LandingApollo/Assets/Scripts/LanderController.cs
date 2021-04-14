@@ -108,7 +108,7 @@ public class LanderController : MonoBehaviour
         else
         {
             Debug.Log("Huston we have landed!");
-
+            landed = true;
             mainEngine.Shutdown();
             foreach (var thruster in sideThrusters)
             {

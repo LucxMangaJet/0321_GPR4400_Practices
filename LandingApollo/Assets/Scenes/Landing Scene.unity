@@ -171,7 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e27b96d41504e244819c6662ba15801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightDetectorError: 2.5
+  heightDetectorError: -5
+  engineEnergyLossPercent: 0.06
 --- !u!1 &683392627
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +706,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1753099940526709198, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: force
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753099940593980675, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: force
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753099940783154186, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: force
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753099940993756342, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: force
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753099941296608245, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: force
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753099941424489726, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: force
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753099941522418381, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: force
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4642219789710748569, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: force
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4642219790098400464, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
       propertyPath: m_UseGravity
       value: 1
@@ -721,6 +754,14 @@ PrefabInstance:
       propertyPath: landingComputer
       value: 
       objectReference: {fileID: 527588440}
+    - target: {fileID: 4642219790098400467, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: randomInitialRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4642219790098400467, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
+      propertyPath: randomIntialSideVelocity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4642219790098400470, guid: 34cfe4a4f482bc349a896bd595fb0ecb, type: 3}
       propertyPath: m_RootOrder
       value: 1
