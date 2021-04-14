@@ -6,7 +6,8 @@ using UnityEngine;
 public class LandingComputer : MonoBehaviour
 {
     [SerializeField] float heightDetectorError;
-    [SerializeField] float engineEnergyLossPercent = 0.05f; 
+    [SerializeField] float engineEnergyLossPercent = 0.05f;
+    [SerializeField] bool runNaiveSolution;
 
     float[] rcsThrustersThrottle;
 
@@ -16,7 +17,12 @@ public class LandingComputer : MonoBehaviour
 
         UpdateCancelYawRotation(angularVelocity);
         UpdateCancelSideVelocity(velocity, rcsThrusters);
-        NaiveUpdateCancelVerticalVelocity(velocity, heightFromGround, mainEngine);
+
+        if (runNaiveSolution)
+            NaiveUpdateCancelVerticalVelocity(velocity, heightFromGround, mainEngine);
+        else
+            CompleteUpdateCancelVerticalVelocity(velocity, heightFromGround, mainEngine);
+
         UpdateThrusterThrottle(rcsThrusters);
     }
 
@@ -129,7 +135,7 @@ public class LandingComputer : MonoBehaviour
         float correctedHeight = heightFromGround + heightDetectorError;
 
         float v0 = velocity.y;
-        float e = mainEngine.GetMaxImpulseStrength() * (1- engineEnergyLossPercent); //engine seems to not be applying the force 100% so we use a slightly reduced engine impulse
+        float e = mainEngine.GetMaxImpulseStrength() * (1 - engineEnergyLossPercent); //engine seems to not be applying the force 100% so we use a slightly reduced engine impulse
         float g = Physics.gravity.y;
 
         float b = -v0 / (g + e);
