@@ -13,7 +13,7 @@ public class StateMachine
         if (states.Count == 0)
             Debug.LogError("Empty statemachine defined.");
 
-        current = states[0];
+        ChangeStateTo(states[0]);
     }
 
     public void Update()
@@ -32,12 +32,11 @@ public class StateMachine
                 break;
             }
         }
-
     }
 
     private void ChangeStateTo(State target)
     {
-        current.OnExit?.Invoke();
+        current?.OnExit?.Invoke();
 
         current = target;
 
@@ -60,6 +59,7 @@ public class StateMachine
 public class State
 {
     public string Name;
+
     public System.Action OnEnter;
     public System.Action OnUpdate;
     public System.Action OnExit; 
@@ -87,8 +87,6 @@ public class Transition
 {
     public readonly State Target;
     public readonly System.Func<bool> Condition;
-    public delegate bool FuncDelegate();
-
 
     public Transition(System.Func<bool> condition, State target)
     {
