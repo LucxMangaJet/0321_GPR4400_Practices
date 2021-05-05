@@ -5,7 +5,7 @@ using UnityEngine;
 public class RollerAIBehaviour : MonoBehaviour
 {
     [SerializeField] float stunDuration, tauntDuration;
-    [SerializeField] bool targetInSight;
+    [SerializeField] float rollSpeed;
     [SerializeField] string rollAnimationState, idleAnimationState, stunnedAnimationState, tauntedAnimationState;
     [SerializeField] Animator animator;
 
@@ -48,9 +48,14 @@ public class RollerAIBehaviour : MonoBehaviour
 
         UnityEditor.Handles.color = Color.black;
         UnityEditor.Handles.Label(transform.position + Vector3.up, stateMachine.GetCurrentStateName());
-        Gizmos.DrawRay(transform.position, transform.right * transform.localScale.x);
+        Gizmos.DrawRay(transform.position, GetMoveDirection() * 10);
     }
 #endif
+
+    private Vector3 GetMoveDirection()
+    {
+        return transform.right * transform.localScale.x;
+    }
 
     //States
 
@@ -72,7 +77,7 @@ public class RollerAIBehaviour : MonoBehaviour
 
     private void RollUpdate()
     {
-        transform.position += transform.right * transform.localScale.x * Time.deltaTime;
+        transform.position += GetMoveDirection() * rollSpeed * Time.deltaTime;
     }
 
     private void StunnedStart()
@@ -93,10 +98,10 @@ public class RollerAIBehaviour : MonoBehaviour
 
     private bool TargetInSight()
     {
-         var hits = Physics2D.RaycastAll(transform.position, transform.right * transform.localScale.x);
+        var hits = Physics2D.RaycastAll(transform.position, GetMoveDirection());
         foreach (var hit in hits)
         {
-            if(hit.transform.TryGetComponent(out EnemyMarker marker))
+            if (hit.transform.TryGetComponent(out EnemyMarker marker))
             {
                 return true;
             }

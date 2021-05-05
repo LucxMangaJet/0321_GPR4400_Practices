@@ -641,6 +641,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5829481752797325996}
     - target: {fileID: 5829481754156807939, guid: 61c60d4afb301f149ae4c6aad144690f, type: 3}
+      propertyPath: rollSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5829481754156807939, guid: 61c60d4afb301f149ae4c6aad144690f, type: 3}
       propertyPath: idleAnimationState
       value: Idle
       objectReference: {fileID: 0}
