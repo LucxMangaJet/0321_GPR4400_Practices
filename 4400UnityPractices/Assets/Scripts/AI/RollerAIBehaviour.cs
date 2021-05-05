@@ -6,9 +6,8 @@ public class RollerAIBehaviour : MonoBehaviour
 {
     [SerializeField] float stunDuration, tauntDuration;
     [SerializeField] bool targetInSight;
-    [SerializeField] Sprite rollSprite, idleSprite, tauntSprite;
-    [SerializeField] SpriteRenderer renderer;
-
+    [SerializeField] string rollAnimationState, idleAnimationState, stunnedAnimationState, tauntedAnimationState;
+    [SerializeField] Animator animator;
 
     private StateMachine stateMachine;
     private float hitTimestamp = -10000;
@@ -41,6 +40,7 @@ public class RollerAIBehaviour : MonoBehaviour
         stateMachine.Update();
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying)
@@ -48,25 +48,26 @@ public class RollerAIBehaviour : MonoBehaviour
 
         UnityEditor.Handles.color = Color.black;
         UnityEditor.Handles.Label(transform.position + Vector3.up, stateMachine.GetCurrentStateName());
+        Gizmos.DrawRay(transform.position, transform.right * transform.localScale.x);
     }
+#endif
 
     //States
 
     private void TauntedStart()
     {
-        renderer.sprite = tauntSprite;
         tauntTimestamp = Time.time;
+        animator.Play(tauntedAnimationState);
     }
 
     private void SearchStart()
     {
-        renderer.sprite = idleSprite;
-        //play animation
+        animator.Play(idleAnimationState);
     }
 
     private void RollStart()
     {
-        renderer.sprite = rollSprite;
+        animator.Play(rollAnimationState);
     }
 
     private void RollUpdate()
@@ -77,6 +78,7 @@ public class RollerAIBehaviour : MonoBehaviour
     private void StunnedStart()
     {
         stunTimestamp = Time.time;
+        animator.Play(stunnedAnimationState);
     }
 
     private void StunnedEnd()
@@ -91,7 +93,15 @@ public class RollerAIBehaviour : MonoBehaviour
 
     private bool TargetInSight()
     {
-        return targetInSight;
+         var hits = Physics2D.RaycastAll(transform.position, transform.right * transform.localScale.x);
+        foreach (var hit in hits)
+        {
+            if(hit.transform.TryGetComponent(out EnemyMarker marker))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private bool StunFinished()
@@ -112,5 +122,6 @@ public class RollerAIBehaviour : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         hitTimestamp = Time.time;
+        //Deal damage?
     }
 }
